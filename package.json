@@ -1,0 +1,16 @@
+{
+  "name": "hanzi-overlay",
+  "version": "0.1.0",
+  "description": "Blok teks Mandarin di aplikasi apa pun, tekan Ctrl+Alt+H, muncul gelembung pinyin.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "pinyin-pro": "^3.26.0",
+    "tesseract.js": "^5.1.1"
+  },
+  "devDependencies": {
+    "electron": "^44.9.0"
+  }
+}
