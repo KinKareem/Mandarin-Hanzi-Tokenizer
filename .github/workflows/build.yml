@@ -27,4 +27,22 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/v')
         uses: softprops/action-gh-release@v2
         with:
+          name: Hanzi Overlay ${{ github.ref_name }}
           files: dist/*.exe
+          generate_release_notes: true
+          body: |
+            Aplikasi desktop Windows yang menampilkan pinyin dan terjemahan dari teks Mandarin.
+
+            **Cara pakai**
+            - Blok teks Mandarin lalu tekan `Ctrl+Alt+H`
+            - Teks di gambar: tekan `Ctrl+Alt+J` lalu tarik kotak
+            - Keluar: `Ctrl+Alt+Q`
+
+            **Unduh**
+            - `Hanzi-Overlay-Setup-*.exe`: installer dengan shortcut (disarankan)
+            - `Hanzi-Overlay-Portable-*.exe`: tanpa instal
+
+            **Catatan**
+            - Windows mungkin menampilkan "Windows protected your PC" karena aplikasi belum ditandatangani. Klik **More info**, lalu **Run anyway**.
+            - Antivirus kadang salah menandai karena aplikasi menyalin teks otomatis lewat PowerShell. Kode sumbernya terbuka di repo ini.
+            - Perlu internet untuk terjemahan dan untuk mengunduh data OCR saat pertama kali dipakai.
