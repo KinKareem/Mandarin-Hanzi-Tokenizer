@@ -313,9 +313,13 @@ function getOcrWorker() {
     ocrWorkerPromise = (async () => {
       const { createWorker } = require("tesseract.js");
       // data bahasa Mandarin diunduh sekali, lalu disimpan di folder proyek (bukan drive C)
-      const cachePath = path.join(__dirname, "tessdata");
+      const cachePath = path.join(app.getPath("userData"), "tessdata");
       fs.mkdirSync(cachePath, { recursive: true });
-      const w = await createWorker(OCR_LANG, 1, { cachePath });
+      // di aplikasi terpasang, file worker ada di folder app.asar.unpacked (tidak bisa dijalankan dari dalam asar)
+      const unpacked = (p) => p.replace("app.asar" + path.sep, "app.asar.unpacked" + path.sep);
+      const workerPath = unpacked(require.resolve("tesseract.js/src/worker-script/node/index.js"));
+      const corePath = unpacked(path.dirname(require.resolve("tesseract.js-core/package.json")));
+      const w = await createWorker(OCR_LANG, 1, { cachePath, workerPath, corePath });
       await w.setParameters({ tessedit_pageseg_mode: "6", preserve_interword_spaces: "0" });
       return w;
     })().catch((e) => { ocrWorkerPromise = null; throw e; });
@@ -468,7 +472,7 @@ ipcMain.on("measured", (_e, { w, h }) => {
 ipcMain.on("close", () => { if (win) win.hide(); });
 
 // ---------- Widget melayang di tepi layar ----------
-const SETTINGS_FILE = path.join(__dirname, "settings.json");
+const SETTINGS_FILE = path.join(app.getPath("userData"), "settings.json");
 const WIDGET_W = 72;
 const WIDGET_H = 250;
 let widget = null;

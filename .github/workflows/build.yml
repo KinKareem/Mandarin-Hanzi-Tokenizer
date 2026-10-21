@@ -1,0 +1,30 @@
+name: Build installer
+
+on:
+  workflow_dispatch:        # tombol "Run workflow" di tab Actions
+  push:
+    tags: ["v*"]            # atau push tag, mis. v0.1.0
+
+permissions:
+  contents: write
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install
+      - run: npx electron-builder --win --publish never
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Hanzi-Overlay-Windows
+          path: |
+            dist/*.exe
+      - name: Lampirkan ke GitHub Release (jika dari tag)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*.exe

@@ -1,16 +1,91 @@
 {
   "name": "hanzi-overlay",
+  "productName": "Hanzi Overlay",
   "version": "0.1.0",
   "description": "Blok teks Mandarin di aplikasi apa pun, tekan Ctrl+Alt+H, muncul gelembung pinyin.",
+  "author": "Hanzi Overlay",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "dist": "electron-builder --win",
+    "dist:mac": "electron-builder --mac",
+    "dist:linux": "electron-builder --linux"
   },
   "dependencies": {
     "pinyin-pro": "^3.26.0",
     "tesseract.js": "^5.1.1"
   },
   "devDependencies": {
-    "electron": "^44.9.0"
+    "electron": "^44.9.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.hanzioverlay.app",
+    "productName": "Hanzi Overlay",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "*.html",
+      "*.css",
+      "popup.js",
+      "widget.js",
+      "select.js",
+      "preload.js",
+      "widget-preload.js",
+      "select-preload.js",
+      "package.json",
+      "build/icon.png"
+    ],
+    "asarUnpack": [
+      "node_modules/tesseract.js/**",
+      "node_modules/tesseract.js-core/**"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Hanzi Overlay",
+      "runAfterFinish": true,
+      "artifactName": "Hanzi-Overlay-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Hanzi-Overlay-Portable-${version}.${ext}"
+    },
+    "mac": {
+      "icon": "build/icon.png",
+      "category": "public.app-category.education",
+      "target": [
+        "dmg"
+      ]
+    },
+    "linux": {
+      "icon": "build/icon.png",
+      "category": "Education",
+      "target": [
+        "AppImage"
+      ]
+    }
   }
 }
