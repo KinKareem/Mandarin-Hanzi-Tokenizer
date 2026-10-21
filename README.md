@@ -109,4 +109,8 @@ Ubah di bagian atas `main.js`:
 
 ## Teknologi
 
+<<<<<<< HEAD
 [Electron](https://www.electronjs.org/), [pinyin-pro](https://github.com/zh-lx/pinyin-pro), [Tesseract.js](https://github.com/naptha/tesseract.js), [electron-builder](https://www.electron.build/).
+=======
+[Electron](https://www.electronjs.org/), [pinyin-pro](https://github.com/zh-lx/pinyin-pro), [Tesseract.js](https://github.com/naptha/tesseract.js), [electron-builder](https://www.electron.build/).
+>>>>>>> a5f601278d7401c8953b53fcabe5e8ef65844129
